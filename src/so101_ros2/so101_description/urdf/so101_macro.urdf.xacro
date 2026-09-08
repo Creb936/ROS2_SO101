@@ -1,0 +1,300 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Khai báo macro với 3 tham số: prefix, parent và khối origin -->
+    <xacro:macro name="so101_arm" params="prefix parent *origin">
+
+        <!-- THÊM LẠI LINK ROOT Ở ĐÂY -->
+        <link name="${prefix}root" />
+
+        <link name="${prefix}base_link">
+            <inertial>
+                <mass value="0.234577" />
+                <origin xyz="-4.17088e-05 0.0326872 0.0322969" rpy="0 -0 0" />
+                <inertia ixx="0.000310491" ixy="2.6781e-07" ixz="-6.0248e-07" iyy="0.000247507" iyz="2.2189e-05" izz="0.000303594" />
+            </inertial>
+            <visual>
+                <origin xyz="0 -0.0704 0.016" rpy="0 -0 0" />
+                <geometry>
+                    <mesh filename="package://so101_description/meshes/so101/Base_Link.stl" scale="1 1 1" />
+                </geometry>
+                <material name="0.917647_0.917647_0.917647_0.000000_0.000000">
+                    <color rgba="0.917647 0.917647 0.917647 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 -0.0704 0.016" rpy="0 -0 0" />
+                <geometry>
+                    <mesh filename="package://so101_description/meshes/so101/Base_Link_Collision.stl" scale="1 1 1" />
+                </geometry>
+            </collision>
+        </link>
+        
+        <link name="${prefix}link_2">
+            <inertial>
+                <mass value="0.17508" />
+                <origin xyz="0.031067 0.0676521 0.00358282" rpy="0 1.44874 0" />
+                <inertia ixx="0.000304182" ixy="3.31896e-06" ixz="2.0908e-06" iyy="7.07247e-05" iyz="8.49215e-07" izz="0.000293165" />
+            </inertial>
+            <visual>
+                <origin xyz="-0.043226 -0.1014 -0.00530226" rpy="0 1.44874 0" />
+                <geometry>
+                    <mesh filename="package://so101_description/meshes/so101/Link_2.stl" scale="1 1 1" />
+                </geometry>
+                <material name="0.917647_0.917647_0.917647_0.000000_0.000000">
+                    <color rgba="0.917647 0.917647 0.917647 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="-0.043226 -0.1014 -0.00530226" rpy="0 1.44874 0" />
+                <geometry>
+                    <mesh filename="package://so101_description/meshes/so101/Link_2_Collision.stl" scale="1 1 1" />
+                </geometry>
+            </collision>
+        </link>
+        
+        <link name="${prefix}link_3">
+            <inertial>
+                <mass value="0.218076" />
+                <origin xyz="-0.032577 0.0512814 -0.0791874" rpy="-1.07854 -3.62462e-16 -2.48169e-16" />
+                <inertia ixx="0.000438118" ixy="-2.91992e-06" ixz="2.48775e-06" iyy="0.000367616" iyz="0.000166116" izz="0.000286676" />
+            </inertial>
+            <visual>
+                <origin xyz="-0.0319 -0.168646 0.157892" rpy="-1.07854 -3.62462e-16 -2.48169e-16" />
+                <geometry>
+                    <mesh filename="package://so101_description/meshes/so101/Link_3.stl" scale="1 1 1" />
+                </geometry>
+                <material name="0.917647_0.917647_0.917647_0.000000_0.000000">
+                    <color rgba="0.917647 0.917647 0.917647 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="-0.0319 -0.168646 0.157892" rpy="-1.07854 -3.62462e-16 -2.48169e-16" />
+                <geometry>
+                    <mesh filename="package://so101_description/meshes/so101/Link_3_Collision.stl" scale="1 1 1" />
+                </geometry>
+            </collision>
+        </link>
+        
+        <link name="${prefix}link_4">
+            <inertial>
+                <mass value="0.188835" />
+                <origin xyz="-0.0321198 -0.0547678 0.0660047" rpy="0.657991 -2.05616e-16 1.93952e-16" />
+                <inertia ixx="0.000336984" ixy="4.36303e-06" ixz="-3.9803e-06" iyy="0.000280877" iyz="0.000149131" izz="0.000239713" />
+            </inertial>
+            <visual>
+                <origin xyz="-0.03185 -0.20766 -0.298702" rpy="0.657991 -2.05616e-16 1.93952e-16" />
+                <geometry>
+                    <mesh filename="package://so101_description/meshes/so101/Link_4.stl" scale="1 1 1" />
+                </geometry>
+                <material name="0.917647_0.917647_0.917647_0.000000_0.000000">
+                    <color rgba="0.917647 0.917647 0.917647 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="-0.03185 -0.20766 -0.298702" rpy="0.657991 -2.05616e-16 1.93952e-16" />
+                <geometry>
+                    <mesh filename="package://so101_description/meshes/so101/Link_4_Collision.stl" scale="1 1 1" />
+                </geometry>
+            </collision>       
+        </link>
+        
+        <link name="${prefix}link_5">
+            <inertial>
+                <mass value="0.0644315" />
+                <origin xyz="-0.0291244 -0.00699877 0.0370222" rpy="-1.3827 -8.37456e-17 6.93084e-17" />
+                <inertia ixx="3.39542e-05" ixy="9.07343e-07" ixz="-5.29264e-06" iyy="7.61695e-05" iyz="4.61888e-06" izz="5.32817e-05" />
+            </inertial>
+            <visual>
+                <origin xyz="-0.0319 -0.309133 0.289216" rpy="-1.3827 -8.37456e-17 6.93084e-17" />
+                <geometry>
+                    <mesh filename="package://so101_description/meshes/so101/Link_5.stl" scale="1 1 1" />
+                </geometry>
+                <material name="0.917647_0.917647_0.917647_0.000000_0.000000">
+                    <color rgba="0.917647 0.917647 0.917647 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="-0.0319 -0.309133 0.289216" rpy="-1.3827 -8.37456e-17 6.93084e-17" />
+                <geometry>
+                    <mesh filename="package://so101_description/meshes/so101/Link_5_Collision.stl" scale="1 1 1" />
+                </geometry>
+            </collision>         
+        </link>
+        
+        <link name="${prefix}mate_connector_1">
+            <inertial>
+                <mass value="1e-09" />
+                <origin xyz="0 0 0" rpy="0 -0 0" />
+                <inertia ixx="4e-14" ixy="0" ixz="0" iyy="4e-14" iyz="0" izz="4e-14" />
+            </inertial>
+        </link>
+        
+        <link name="${prefix}mate_connector_2">
+            <inertial>
+                <mass value="1e-09" />
+                <origin xyz="0 0 0" rpy="0 -0 0" />
+                <inertia ixx="4e-14" ixy="0" ixz="0" iyy="4e-14" iyz="0" izz="4e-14" />
+            </inertial>
+        </link>
+        
+        <link name="${prefix}moving_jaw_so101_v1">
+            <inertial>
+                <mass value="0.0073316" />
+                <origin xyz="-0.00182785 -0.0358349 0.014666" rpy="0 -0 0" />
+                <inertia ixx="2.97473e-06" ixy="-2.46615e-07" ixz="2.00849e-08" iyy="3.61206e-07" iyz="3.27943e-07" izz="2.9039e-06" />
+            </inertial>
+            <visual>
+                <origin xyz="-0.0120576 -0.241611 -0.2334" rpy="0 -0 0" />
+                <geometry>
+                    <mesh filename="package://so101_description/meshes/so101/Moving_Jaw_SO101_v1.stl" scale="1 1 1" />
+                </geometry>
+                <material name="0.964706_0.964706_0.952941_0.000000_0.000000">
+                    <color rgba="0.964706 0.964706 0.952941 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="-0.0120576 -0.241611 -0.2334" rpy="0 -0 0" />
+                <geometry>
+                    <mesh filename="package://so101_description/meshes/so101/Moving_Jaw_SO101_v1.stl" scale="1 1 1" />
+                </geometry>
+            </collision> 
+        </link>
+        
+        <link name="${prefix}wrist_roll_follower_so101_v1">
+            <inertial>
+                <mass value="0.0524784" />
+                <origin xyz="0.00214216 -0.0327057 0.00765457" rpy="3.14159 1.29034 3.14159" />
+                <inertia ixx="3.97676e-05" ixy="1.13139e-06" ixz="-2.01004e-06" iyy="1.33352e-05" iyz="3.64793e-06" izz="3.46534e-05" />
+            </inertial>
+            <visual>
+                <origin xyz="-0.23989 -0.26822 0.0689428" rpy="3.14159 1.29034 3.14159" />
+                <geometry>
+                    <mesh filename="package://so101_description/meshes/so101/Wrist_Roll_Follower_SO101_v1.stl" scale="1 1 1" />
+                </geometry>
+                <material name="0.917647_0.917647_0.917647_0.000000_0.000000">
+                    <color rgba="0.917647 0.917647 0.917647 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="-0.23989 -0.26822 0.0689428" rpy="3.14159 1.29034 3.14159" />
+                <geometry>
+                    <mesh filename="package://so101_description/meshes/so101/Wrist_Roll_Follower_SO101_v1.stl" scale="1 1 1" />
+                </geometry>
+            </collision> 
+        </link>
+        
+        <joint name="${prefix}end_effector" type="revolute">
+            <origin xyz="-0.018946 -0.0266092 -0.00724663" rpy="3.14159 1.29034 3.14159" />
+            <axis xyz="0 3.88578e-16 -1" />
+            <parent link="${prefix}wrist_roll_follower_so101_v1" />
+            <child link="${prefix}moving_jaw_so101_v1" />
+            <limit effort="1" velocity="1" lower="-1.0472" upper="1.06581e-14" />
+        </joint>
+        
+        <!-- Khớp kết nối môi trường (world) với root của tay -->
+        <joint name="${prefix}base_mount" type="fixed">
+            <xacro:insert_block name="origin" />
+            <parent link="${parent}" />
+            <child link="${prefix}root" />
+        </joint>
+
+        <!-- Khớp nối gốc trả lại như cũ: từ root gắn vào base_link -->
+        <joint name="${prefix}fastened_1" type="fixed">
+            <origin xyz="0 0 0" rpy="1.5708 0 0" />
+            <parent link="${prefix}root" />
+            <child link="${prefix}base_link" />
+        </joint>
+        
+        <joint name="${prefix}joint_1" type="revolute">
+            <origin xyz="-6.93889e-18 0.031 0.05955" rpy="-1.82999e-16 -3.33067e-16 -4.74682e-17" />
+            <axis xyz="0 1 0" />
+            <parent link="${prefix}base_link" />
+            <child link="${prefix}link_2" />
+            <limit effort="1" velocity="1" lower="-3.19407" upper="0.296587" />
+        </joint>
+        
+        <joint name="${prefix}joint_2" type="revolute">
+            <origin xyz="0.0341073 0.11745 -0.0279554" rpy="-8.40441e-14 1.44874 -8.04183e-14" />
+            <axis xyz="-1 -1.78756e-16 -3.88578e-16" />
+            <parent link="${prefix}link_2" />
+            <child link="${prefix}link_3" />
+            <limit effort="1" velocity="1" lower="-2.64934" upper="0.492256" />
+        </joint>
+        
+        <joint name="${prefix}joint_3" type="revolute">
+            <origin xyz="-5e-05 0.0917043 -0.0962012" rpy="-1.07854 1.75227e-15 4.93588e-15" />
+            <axis xyz="-1 2.04157e-16 -3.8686e-16" />
+            <parent link="${prefix}link_3" />
+            <child link="${prefix}link_4" />
+            <limit effort="1" velocity="1" lower="-0.738273" upper="2.05425" />
+        </joint>
+        
+        <joint name="${prefix}joint_4" type="revolute">
+            <origin xyz="-5e-05 -0.0897624 0.107881" rpy="0.657991 3.13488e-15 -1.60269e-15" />
+            <axis xyz="-1 -8.52493e-17 0" />
+            <parent link="${prefix}link_4" />
+            <child link="${prefix}link_5" />
+            <limit effort="1" velocity="1" lower="-1.3827" upper="1.40983" />
+        </joint>
+        
+        <joint name="${prefix}joint_5" type="continuous">
+            <origin xyz="-0.03205 -0.0137812 0.0724001" rpy="-1.3827 1.9657e-14 -4.08562e-15" />
+            <axis xyz="1.78756e-16 1 3.88578e-16" />
+            <parent link="${prefix}link_5" />
+            <child link="${prefix}wrist_roll_follower_so101_v1" />
+        </joint>
+        
+        <joint name="${prefix}mate_connector_1_joint" type="fixed">
+            <origin xyz="0 0 0" rpy="-3.14159 5.55112e-17 -6.93889e-18" />
+            <axis xyz="0 0 1" />
+            <parent link="${prefix}moving_jaw_so101_v1" />
+            <child link="${prefix}mate_connector_1" />
+        </joint>
+        
+        <joint name="${prefix}mate_connector_2_joint" type="fixed">
+            <origin xyz="-0.018946 -0.0266092 -0.00724663" rpy="-1.81334e-15 1.29034 3.14159" />
+            <axis xyz="0 0 1" />
+            <parent link="${prefix}wrist_roll_follower_so101_v1" />
+            <child link="${prefix}mate_connector_2" />
+        </joint>
+
+        <!-- Gắn mạch ros2_control cho từng cánh tay -->
+        <ros2_control name="${prefix}System" type="system">
+            <hardware>
+                <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+            </hardware>
+            <joint name="${prefix}joint_1">
+                <command_interface name="position"/>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="${prefix}joint_2">
+                <command_interface name="position"/>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="${prefix}joint_3">
+                <command_interface name="position"/>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="${prefix}joint_4">
+                <command_interface name="position"/>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="${prefix}joint_5">
+                <command_interface name="position"/>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="${prefix}end_effector">
+                <command_interface name="position"/>
+                <state_interface name="position"/>
+                <state_interface name="velocity"/>
+            </joint>
+        </ros2_control>
+        
+    </xacro:macro>
+</robot>
