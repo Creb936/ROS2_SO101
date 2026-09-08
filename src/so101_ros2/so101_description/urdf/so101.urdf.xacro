@@ -5,22 +5,28 @@
     <!-- Khai báo property cho tên package -->
     <xacro:property name="pkg_name" value="so101_description" />
 
-    <link name="base_link">
-        <inertial>
-            <mass value="0.234577" />
-            <origin xyz="-4.17062e-05 0.0326872 0.0322969" rpy="0 -0 0" />
-            <inertia ixx="0.000310491" ixy="2.67785e-07" ixz="-6.02479e-07" iyy="0.000247507" iyz="2.2189e-05" izz="0.000303595" />
-        </inertial>
-        <visual>
-            <origin xyz="0 -0.0704 0.016" rpy="0 -0 0" />
-            <geometry>
-                <mesh filename="file:///home/server/ros2_cus_ws/src/so101/so101_description/meshes/so101/Base_Link.stl" scale="1 1 1" />
-            </geometry>
-            <material name="0.917647_0.917647_0.917647_0.000000_0.000000">
-                <color rgba="0.917647 0.917647 0.917647 1" />
-            </material>
-        </visual>
-    </link>
+<link name="base_link">
+    <inertial>
+        <mass value="0.234577" />
+        <origin xyz="-4.17088e-05 0.0326872 0.0322969" rpy="0 -0 0" />
+        <inertia ixx="0.000310491" ixy="2.6781e-07" ixz="-6.0248e-07" iyy="0.000247507" iyz="2.2189e-05" izz="0.000303594" />
+    </inertial>
+    <visual>
+        <origin xyz="0 -0.0704 0.016" rpy="0 -0 0" />
+        <geometry>
+            <mesh filename="package://so101_description/meshes/so101/Base_Link.stl" scale="1 1 1" />
+        </geometry>
+        <material name="0.917647_0.917647_0.917647_0.000000_0.000000">
+            <color rgba="0.917647 0.917647 0.917647 1" />
+        </material>
+    </visual>
+    <collision>
+        <origin xyz="0 -0.0704 0.016" rpy="0 -0 0" />
+        <geometry>
+            <mesh filename="package://so101_description/meshes/so101/Base_Link_Collision.stl" scale="1 1 1" />
+        </geometry>
+    </collision>
+</link>
     
     <link name="link_2">
         <inertial>
@@ -31,12 +37,18 @@
         <visual>
             <origin xyz="-0.043226 -0.1014 -0.00530226" rpy="0 1.44874 0" />
             <geometry>
-                <mesh filename="package://${pkg_name}/meshes/so101/Link_2.stl" scale="1 1 1" />
+                <mesh filename="package://so101_description/meshes/so101/Link_2.stl" scale="1 1 1" />
             </geometry>
             <material name="0.917647_0.917647_0.917647_0.000000_0.000000">
                 <color rgba="0.917647 0.917647 0.917647 1" />
             </material>
         </visual>
+        <collision>
+            <origin xyz="-0.043226 -0.1014 -0.00530226" rpy="0 1.44874 0" />
+            <geometry>
+                <mesh filename="package://so101_description/meshes/so101/Link_2_Collision.stl" scale="1 1 1" />
+            </geometry>
+        </collision>
     </link>
     
     <link name="link_3">
@@ -48,12 +60,18 @@
         <visual>
             <origin xyz="-0.0319 -0.168646 0.157892" rpy="-1.07854 -3.62462e-16 -2.48169e-16" />
             <geometry>
-                <mesh filename="package://${pkg_name}/meshes/so101/Link_3.stl" scale="1 1 1" />
+                <mesh filename="package://so101_description/meshes/so101/Link_3.stl" scale="1 1 1" />
             </geometry>
             <material name="0.917647_0.917647_0.917647_0.000000_0.000000">
                 <color rgba="0.917647 0.917647 0.917647 1" />
             </material>
         </visual>
+        <collision>
+            <origin xyz="-0.0319 -0.168646 0.157892" rpy="-1.07854 -3.62462e-16 -2.48169e-16" />
+            <geometry>
+                <mesh filename="package://so101_description/meshes/so101/Link_3_Collision.stl" scale="1 1 1" />
+            </geometry>
+        </collision>
     </link>
     
     <link name="link_4">
@@ -65,12 +83,18 @@
         <visual>
             <origin xyz="-0.03185 -0.20766 -0.298702" rpy="0.657991 -2.05616e-16 1.93952e-16" />
             <geometry>
-                <mesh filename="package://${pkg_name}/meshes/so101/Link_4.stl" scale="1 1 1" />
+                <mesh filename="package://so101_description/meshes/so101/Link_4.stl" scale="1 1 1" />
             </geometry>
             <material name="0.917647_0.917647_0.917647_0.000000_0.000000">
                 <color rgba="0.917647 0.917647 0.917647 1" />
             </material>
         </visual>
+        <collision>
+            <origin xyz="-0.03185 -0.20766 -0.298702" rpy="0.657991 -2.05616e-16 1.93952e-16" />
+            <geometry>
+                <mesh filename="package://so101_description/meshes/so101/Link_4_Collision.stl" scale="1 1 1" />
+            </geometry>
+        </collision>       
     </link>
     
     <link name="link_5">
@@ -82,12 +106,18 @@
         <visual>
             <origin xyz="-0.0319 -0.309133 0.289216" rpy="-1.3827 -8.37456e-17 6.93084e-17" />
             <geometry>
-                <mesh filename="package://${pkg_name}/meshes/so101/Link_5.stl" scale="1 1 1" />
+                <mesh filename="package://so101_description/meshes/so101/Link_5.stl" scale="1 1 1" />
             </geometry>
             <material name="0.917647_0.917647_0.917647_0.000000_0.000000">
                 <color rgba="0.917647 0.917647 0.917647 1" />
             </material>
         </visual>
+        <collision>
+            <origin xyz="-0.0319 -0.309133 0.289216" rpy="-1.3827 -8.37456e-17 6.93084e-17" />
+            <geometry>
+                <mesh filename="package://so101_description/meshes/so101/Link_5_Collision.stl" scale="1 1 1" />
+            </geometry>
+        </collision>         
     </link>
     
     <link name="mate_connector_1">
@@ -115,12 +145,18 @@
         <visual>
             <origin xyz="-0.0120576 -0.241611 -0.2334" rpy="0 -0 0" />
             <geometry>
-                <mesh filename="package://${pkg_name}/meshes/so101/Moving_Jaw_SO101_v1.stl" scale="1 1 1" />
+                <mesh filename="package://so101_description/meshes/so101/Moving_Jaw_SO101_v1.stl" scale="1 1 1" />
             </geometry>
             <material name="0.964706_0.964706_0.952941_0.000000_0.000000">
                 <color rgba="0.964706 0.964706 0.952941 1" />
             </material>
         </visual>
+        <collision>
+            <origin xyz="-0.0120576 -0.241611 -0.2334" rpy="0 -0 0" />
+            <geometry>
+                <mesh filename="package://so101_description/meshes/so101/Moving_Jaw_SO101_v1.stl" scale="1 1 1" />
+            </geometry>
+        </collision> 
     </link>
     
     <link name="root" />
@@ -134,12 +170,18 @@
         <visual>
             <origin xyz="-0.23989 -0.26822 0.0689428" rpy="3.14159 1.29034 3.14159" />
             <geometry>
-                <mesh filename="package://${pkg_name}/meshes/so101/Wrist_Roll_Follower_SO101_v1.stl" scale="1 1 1" />
+                <mesh filename="package://so101_description/meshes/so101/Wrist_Roll_Follower_SO101_v1.stl" scale="1 1 1" />
             </geometry>
             <material name="0.917647_0.917647_0.917647_0.000000_0.000000">
                 <color rgba="0.917647 0.917647 0.917647 1" />
             </material>
         </visual>
+        <collision>
+            <origin xyz="-0.23989 -0.26822 0.0689428" rpy="3.14159 1.29034 3.14159" />
+            <geometry>
+                <mesh filename="package://so101_description/meshes/so101/Wrist_Roll_Follower_SO101_v1.stl" scale="1 1 1" />
+            </geometry>
+        </collision> 
     </link>
     
     <joint name="end_effector" type="revolute">
