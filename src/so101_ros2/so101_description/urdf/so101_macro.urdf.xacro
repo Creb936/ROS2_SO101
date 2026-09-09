@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <!-- Khai báo macro với 3 tham số: prefix, parent và khối origin -->
     <xacro:macro name="so101_arm" params="prefix parent *origin">
 
-        <!-- THÊM LẠI LINK ROOT Ở ĐÂY -->
         <link name="${prefix}root" />
 
         <link name="${prefix}base_link">
@@ -184,58 +182,61 @@
             </collision> 
         </link>
         
+        <!-- Đã sửa số nguyên 1 thành 1.0 -->
         <joint name="${prefix}end_effector" type="revolute">
             <origin xyz="-0.018946 -0.0266092 -0.00724663" rpy="3.14159 1.29034 3.14159" />
             <axis xyz="0 3.88578e-16 -1" />
             <parent link="${prefix}wrist_roll_follower_so101_v1" />
             <child link="${prefix}moving_jaw_so101_v1" />
-            <limit effort="1" velocity="1" lower="-1.0472" upper="1.06581e-14" />
+            <limit effort="1.0" velocity="1.0" lower="-1.0472" upper="1.06581e-14" />
         </joint>
         
-        <!-- Khớp kết nối môi trường (world) với root của tay -->
         <joint name="${prefix}base_mount" type="fixed">
             <xacro:insert_block name="origin" />
             <parent link="${parent}" />
             <child link="${prefix}root" />
         </joint>
 
-        <!-- Khớp nối gốc trả lại như cũ: từ root gắn vào base_link -->
         <joint name="${prefix}fastened_1" type="fixed">
             <origin xyz="0 0 0" rpy="1.5708 0 0" />
             <parent link="${prefix}root" />
             <child link="${prefix}base_link" />
         </joint>
         
+        <!-- Đã sửa số nguyên 1 thành 1.0 -->
         <joint name="${prefix}joint_1" type="revolute">
             <origin xyz="-6.93889e-18 0.031 0.05955" rpy="-1.82999e-16 -3.33067e-16 -4.74682e-17" />
             <axis xyz="0 1 0" />
             <parent link="${prefix}base_link" />
             <child link="${prefix}link_2" />
-            <limit effort="1" velocity="1" lower="-3.19407" upper="0.296587" />
+            <limit effort="1.0" velocity="1.0" lower="-3.19407" upper="0.296587" />
         </joint>
         
+        <!-- Đã sửa số nguyên 1 thành 1.0 -->
         <joint name="${prefix}joint_2" type="revolute">
             <origin xyz="0.0341073 0.11745 -0.0279554" rpy="-8.40441e-14 1.44874 -8.04183e-14" />
             <axis xyz="-1 -1.78756e-16 -3.88578e-16" />
             <parent link="${prefix}link_2" />
             <child link="${prefix}link_3" />
-            <limit effort="1" velocity="1" lower="-2.64934" upper="0.492256" />
+            <limit effort="1.0" velocity="1.0" lower="-2.64934" upper="0.492256" />
         </joint>
         
+        <!-- Đã sửa số nguyên 1 thành 1.0 -->
         <joint name="${prefix}joint_3" type="revolute">
             <origin xyz="-5e-05 0.0917043 -0.0962012" rpy="-1.07854 1.75227e-15 4.93588e-15" />
             <axis xyz="-1 2.04157e-16 -3.8686e-16" />
             <parent link="${prefix}link_3" />
             <child link="${prefix}link_4" />
-            <limit effort="1" velocity="1" lower="-0.738273" upper="2.05425" />
+            <limit effort="1.0" velocity="1.0" lower="-0.738273" upper="2.05425" />
         </joint>
         
+        <!-- Đã sửa số nguyên 1 thành 1.0 -->
         <joint name="${prefix}joint_4" type="revolute">
             <origin xyz="-5e-05 -0.0897624 0.107881" rpy="0.657991 3.13488e-15 -1.60269e-15" />
             <axis xyz="-1 -8.52493e-17 0" />
             <parent link="${prefix}link_4" />
             <child link="${prefix}link_5" />
-            <limit effort="1" velocity="1" lower="-1.3827" upper="1.40983" />
+            <limit effort="1.0" velocity="1.0" lower="-1.3827" upper="1.40983" />
         </joint>
         
         <joint name="${prefix}joint_5" type="continuous">
@@ -259,39 +260,50 @@
             <child link="${prefix}mate_connector_2" />
         </joint>
 
-        <!-- Gắn mạch ros2_control cho từng cánh tay -->
         <ros2_control name="${prefix}System" type="system">
             <hardware>
                 <plugin>gz_ros2_control/GazeboSimSystem</plugin>
             </hardware>
             <joint name="${prefix}joint_1">
                 <command_interface name="position"/>
-                <state_interface name="position"/>
+                <state_interface name="position">
+                    <param name="initial_value">0.0</param>
+                </state_interface>
                 <state_interface name="velocity"/>
             </joint>
             <joint name="${prefix}joint_2">
                 <command_interface name="position"/>
-                <state_interface name="position"/>
+                <state_interface name="position">
+                    <param name="initial_value">0.0</param>
+                </state_interface>
                 <state_interface name="velocity"/>
             </joint>
             <joint name="${prefix}joint_3">
                 <command_interface name="position"/>
-                <state_interface name="position"/>
+                <state_interface name="position">
+                    <param name="initial_value">0.0</param>
+                </state_interface>
                 <state_interface name="velocity"/>
             </joint>
             <joint name="${prefix}joint_4">
                 <command_interface name="position"/>
-                <state_interface name="position"/>
+                <state_interface name="position">
+                    <param name="initial_value">0.0</param>
+                </state_interface>
                 <state_interface name="velocity"/>
             </joint>
             <joint name="${prefix}joint_5">
                 <command_interface name="position"/>
-                <state_interface name="position"/>
+                <state_interface name="position">
+                    <param name="initial_value">0.0</param>
+                </state_interface>
                 <state_interface name="velocity"/>
             </joint>
             <joint name="${prefix}end_effector">
                 <command_interface name="position"/>
-                <state_interface name="position"/>
+                <state_interface name="position">
+                    <param name="initial_value">0.0</param>
+                </state_interface>
                 <state_interface name="velocity"/>
             </joint>
         </ros2_control>
