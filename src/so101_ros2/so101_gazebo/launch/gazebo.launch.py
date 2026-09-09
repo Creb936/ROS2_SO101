@@ -1,34 +1,71 @@
 import os
+
 from launch import LaunchDescription
-from launch.actions import TimerAction
-from launch.actions import IncludeLaunchDescription, AppendEnvironmentVariable
+from launch.actions import TimerAction, IncludeLaunchDescription, AppendEnvironmentVariable
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
-from launch.substitutions import Command
-from launch_ros.parameter_descriptions import ParameterValue 
 from ament_index_python.packages import get_package_share_directory
+from moveit_configs_utils import MoveItConfigsBuilder
+
 
 def generate_launch_description():
-    pkg_gazebo = FindPackageShare('so101_gazebo').find('so101_gazebo')
     pkg_description = get_package_share_directory('so101_description')
+    pkg_moveit_config = get_package_share_directory('so101_moveit_config')
+
     workspace_share_dir = os.path.join(pkg_description, '..')
-    
-    set_env = AppendEnvironmentVariable('GZ_SIM_RESOURCE_PATH', workspace_share_dir)
-    xacro_file = os.path.join(pkg_description, 'urdf', 'dual_so101.urdf.xacro')
-    
+
+    # Gazebo resource path
+    set_env = AppendEnvironmentVariable(
+        'GZ_SIM_RESOURCE_PATH', workspace_share_dir
+    )
+    os.environ['GZ_SIM_RESOURCE_PATH'] = workspace_share_dir
+
+    # ================================================================
+    # 1. MOVEIT CONFIG
+    # ================================================================
+    # Use the SAME URDF and SRDF from so101_moveit_config.
+    # SRDF contains arm1, arm2 and dual_arm planning groups.
+    moveit_config = (
+        MoveItConfigsBuilder(
+            'dual_so101_assembly',
+            package_name='so101_moveit_config'
+        )
+        .robot_description(
+            file_path='config/dual_so101_assembly.urdf.xacro'
+        )
+        .robot_description_semantic(
+            file_path='config/dual_so101_assembly.srdf'
+        )
+        .trajectory_execution(
+            file_path='config/moveit_controllers.yaml'
+        )
+        .to_moveit_configs()
+    )
+
+    # ================================================================
+    # 2. ROBOT STATE PUBLISHER
+    # ================================================================
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        parameters=[{
-            'robot_description': ParameterValue(Command(['xacro ', xacro_file]), value_type=str),
-            'use_sim_time': True  # Bật đồng bộ thời gian
-        }]
+        output='both',
+        parameters=[
+            moveit_config.robot_description,
+            {'use_sim_time': True}
+        ]
     )
 
+    # ================================================================
+    # 3. GAZEBO
+    # ================================================================
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(FindPackageShare('ros_gz_sim').find('ros_gz_sim'), 'launch', 'gz_sim.launch.py')
+            os.path.join(
+                FindPackageShare('ros_gz_sim').find('ros_gz_sim'),
+                'launch',
+                'gz_sim.launch.py'
+            )
         ),
         launch_arguments={'gz_args': '-r empty.sdf'}.items()
     )
@@ -36,31 +73,12 @@ def generate_launch_description():
     spawn_entity = Node(
         package='ros_gz_sim',
         executable='create',
-        arguments=['-name', 'dual_so101', '-topic', 'robot_description', '-z', '0.01'],
+        arguments=[
+            '-name', 'dual_so101',
+            '-topic', 'robot_description',
+            '-z', '0.01'
+        ],
         output='screen'
-    )
-
-    # --- ĐOẠN CODE MỚI THÊM VÀO ---
-    
-    # 1. Mở RViz2
-    rviz2 = Node(
-        package='rviz2',
-        executable='rviz2',
-        # Trỏ tới file config của thư mục description (nếu sếp có)
-        arguments=['-d', os.path.join(pkg_description, 'rviz', 'urdf.rviz')],
-        parameters=[{'use_sim_time': True}]
-    )
-
-    # Cho spawner chờ 5 giây để Gazebo và plugin ros2_control khởi động xong xuôi
-    delayed_joint_state_broadcaster = TimerAction(
-        period=5.0,
-        actions=[
-            Node(
-                package="controller_manager",
-                executable="spawner",
-                arguments=["joint_state_broadcaster"],
-            )
-        ]
     )
 
     clock_bridge = Node(
@@ -70,12 +88,82 @@ def generate_launch_description():
         output='screen'
     )
 
+    # ================================================================
+    # 4. ROS 2 CONTROL
+    # ================================================================
+    # Start joint_state_broadcaster after gz_ros2_control has initialized.
+    delayed_joint_state_broadcaster = TimerAction(
+        period=5.0,
+        actions=[
+            Node(
+                package='controller_manager',
+                executable='spawner',
+                arguments=[
+                    'joint_state_broadcaster',
+                    '--controller-manager', '/controller_manager'
+                ],
+                output='screen'
+            )
+        ]
+    )
+
+    # ================================================================
+    # 5. MOVE GROUP
+    # ================================================================
+    # Explicitly pass the complete MoveIt config, including
+    # robot_description_semantic (SRDF).
+    move_group_node = Node(
+        package='moveit_ros_move_group',
+        executable='move_group',
+        output='screen',
+        parameters=[
+            moveit_config.robot_description,
+            moveit_config.robot_description_semantic,
+            moveit_config.robot_description_kinematics,
+            moveit_config.planning_pipelines,
+            moveit_config.joint_limits,
+            moveit_config.trajectory_execution,
+            {'use_sim_time': True}
+        ]
+    )
+
+    # ================================================================
+    # 6. RVIZ
+    # ================================================================
+    # Start RViz AFTER move_group has had time to initialize.
+    # This avoids RViz MotionPlanning loading before the PlanningScene
+    # and semantic robot model are available.
+    delayed_rviz = TimerAction(
+        period=5.0,
+        actions=[
+            Node(
+                package='rviz2',
+                executable='rviz2',
+                name='rviz2',
+                output='screen',
+                arguments=[
+                    '-d',
+                    os.path.join(pkg_moveit_config, 'config', 'moveit.rviz')
+                ],
+                parameters=[
+                    moveit_config.robot_description,
+                    moveit_config.robot_description_semantic,
+                    moveit_config.robot_description_kinematics,
+                    moveit_config.planning_pipelines,
+                    moveit_config.joint_limits,
+                    {'use_sim_time': True}
+                ]
+            )
+        ]
+    )
+
     return LaunchDescription([
         set_env,
         robot_state_publisher,
         gazebo,
         spawn_entity,
-        rviz2,
         clock_bridge,
-        delayed_joint_state_broadcaster
+        move_group_node,
+        delayed_joint_state_broadcaster,
+        delayed_rviz
     ])

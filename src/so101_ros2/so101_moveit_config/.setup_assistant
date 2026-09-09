@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: so101_description
+    relative_path: urdf/dual_so101.urdf.xacro
+  srdf:
+    relative_path: config/dual_so101_assembly.srdf
+  package_settings:
+    author_name: Jun
+    author_email: dung6a2tp@gmail.com
+    generated_timestamp: 1788924243
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity

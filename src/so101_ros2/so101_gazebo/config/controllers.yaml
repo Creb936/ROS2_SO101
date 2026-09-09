@@ -5,3 +5,43 @@ controller_manager:
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
+
+    arm1_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    arm2_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+
+arm1_controller:
+  ros__parameters:
+    joints:
+      - arm1_joint_1
+      - arm1_joint_2
+      - arm1_joint_3
+      - arm1_joint_4
+      - arm1_joint_5
+
+    command_interfaces:
+      - position
+
+    state_interfaces:
+      - position
+      - velocity
+
+
+arm2_controller:
+  ros__parameters:
+    joints:
+      - arm2_joint_1
+      - arm2_joint_2
+      - arm2_joint_3
+      - arm2_joint_4
+      - arm2_joint_5
+
+    command_interfaces:
+      - position
+
+    state_interfaces:
+      - position
+      - velocity
