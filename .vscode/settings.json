@@ -1,0 +1,6 @@
+{
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python.analysis.extraPaths": [
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ]
+}
