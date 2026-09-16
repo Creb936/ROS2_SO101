@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro"
-       name="dual_so101_assembly">
-
-    <xacro:include filename="$(find so101_description)/urdf/dual_so101.urdf.xacro" />
-
-</robot>
